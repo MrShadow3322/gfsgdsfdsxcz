@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketplace</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #1a1d2e;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    .header,
+    .footer {
+      background-color: #23263a;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      background-color: #2e3140;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .nav a {
+      color: #ffffff;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .nav a:hover {
+      background-color: #5567a6;
+      transform: scale(1.1);
+    }
+
+    .nav a.active {
+      background-color: #40568a;
+      transform: scale(1.1);
+    }
+
+    .content {
+      padding: 20px;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .categories,
+    .all-products {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .category {
+      background-color: #2e3140;
+      padding: 20px;
+      border-radius: 10px;
+      transition: background-color 0.3s, transform 0.3s;
+      cursor: pointer;
+    }
+
+    .category:hover {
+      background-color: #5567a6;
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <h1>Marketplace</h1>
+  </header>
+  <nav class="nav">
+    <a href="javascript:void(0);" id="main-link" onclick="showPage('main')">Главная</a>
+    <a href="javascript:void(0);" id="search-link" onclick="showPage('search')">Поиск</a>
+    <a href="javascript:void(0);" id="profile-link" onclick="showPage('profile')">Профиль</a>
+  </nav>
+  <main class="content">
+    <!-- Главная -->
+    <section id="main" class="page">
+      <h2>Добро пожаловать на Marketplace</h2>
+      <div class="categories">
+        <button class="category" onclick="showCategories()">Категории</button>
+        <button class="category" onclick="showAllProducts()">Все товары</button>
+      </div>
+      <div id="categories" class="categories" style="display: none;">
+        <div class="category" onclick="showCategory('home')">Для дома</div>
+        <div class="category" onclick="showCategory('tech')">Техника</div>
+        <div class="category" onclick="showCategory('clothes')">Одежда</div>
+      </div>
+      <div id="all-products" class="all-products" style="display: none;">
+        <!-- Все товары будут отображены здесь -->
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    Marketplace © 2024
+  </footer>
+  <script>
+    const categories = {
+      home: [
+        { id: 1, title: 'Уютный диван', description: 'Мягкий и удобный диван.', price: '1500 грн' },
+        { id: 2, title: 'Стол с креслами', description: 'Мебельный комплект.', price: '2000 грн' }
+      ],
+      tech: [
+        { id: 3, title: 'Смартфон X100', description: 'Высокопроизводительный смартфон.', price: '5000 грн' },
+        { id: 4, title: 'Ноутбук Y500', description: 'Мощный ноутбук.', price: '10000 грн' }
+      ],
+      clothes: [
+        { id: 5, title: 'Футболка', description: 'Модная футболка.', price: '300 грн' },
+        { id: 6, title: 'Джинсы', description: 'Стильные джинсы.', price: '700 грн' }
+      ]
+    };
+
+    function showPage(pageId) {
+      document.querySelectorAll(".page").forEach(page => page.style.display = "none");
+      document.getElementById(pageId).style.display = "block";
+    }
+
+    function showCategories() {
+      document.getElementById('categories').style.display = 'flex';
+      document.getElementById('all-products').style.display = 'none';
+    }
+
+    function showAllProducts() {
+      const allProductsContainer = document.getElementById('all-products');
+      allProductsContainer.innerHTML = '';
+      allProductsContainer.style.display = 'flex';
+      document.getElementById('categories').style.display = 'none';
+
+      Object.values(categories).flat().forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.className = 'category';
+        productElement.textContent = `${product.title} - ${product.price}`;
+        allProductsContainer.appendChild(productElement);
+      });
+    }
+
+    function showCategory(category) {
+      const products = categories[category];
+      const allProductsContainer = document.getElementById('all-products');
+      allProductsContainer.innerHTML = '';
+      allProductsContainer.style.display = 'flex';
+
+      products.forEach(product => {
+        const productElement = document.createElement('div');
+        productElement.className = 'category';
+        productElement.textContent = `${product.title} - ${product.price}`;
+        allProductsContainer.appendChild(productElement);
+      });
+    }
+  </script>
+</body>
+
+</html>
